@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
+          <img src="{{single_product.images.url}}" class="img-fluid" alt="" width="300" height="300">
+        </div>
+        <div class="col-md-8 mb-4"> 
+          <!--Content-->
+          <form action="{% url 'add_to_cart' single_product.id %}" method="POST" class="form">
+            {% csrf_token %}
+            <div class="p-4">
+              <!-- Product Name -->
+              <h2 class="font-weight-bold"><strong>{{single_product.product_name}}</strong></h2>
+              <!-- Price -->
+              <p class="lead my-0">
+                <span><strong>&#8377; {{single_product.price}}</strong></span>
+              </p>
+              <!-- Description -->
+              <p class="lead font-weight-bold my-0"><strong>Description:</strong></p>
+              <p>{{single_product.description}}</p>
+              
+              <div class="row">
+                <!-- Color Selection -->
+                <div class="col-md-6">
+                  <div class="item-option-select">
+                    <h6><strong>Choose Color</strong></h6>
+                    <select name="color" class="browser-default custom-select" required>
+                      <option value="" disabled selected>Select</option>
+                      {% for i in single_product.variation_set.colors %}
+                      <option value="{{ i.variation_value | capfirst }}">{{ i.variation_value | capfirst }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <!-- Size Selection -->
+                <div class="col-md-6">
+                  <div class="item-option-select">
+                    <h6><strong>Choose Size</strong></h6>
+                    <select name="size" class="browser-default custom-select" required>
+                      <option value="" disabled selected>Select</option>
+                      {% for i in single_product.variation_set.sizes %}
+                      <option value="{{ i.variation_value | capfirst }}">{{ i.variation_value | capfirst }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+                <button class="btn btn-primary btn-md my-2 p" type="submit">
+                  Add to Cart
+                  <i class="fas fa-shopping-cart ml-1"></i>
+                </button>
+            </div>
+          </form>
+          <!--Content-->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+  </main>
+{% endblock content %}
+
+

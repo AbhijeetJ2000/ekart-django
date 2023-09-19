@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {% block title %} {% endblock %}
+  </title>
+  {% include 'includes/MDB_Links.html' %}
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  {% include 'includes/navbar.html' %}
+
+  <!-- Block content -->
+  {% block content %}
+
+  {% endblock %}
+
+  <!-- Footer -->
+  {% include 'includes/footer.html' %}
+  {% include 'includes/MDB_Scripts.html' %}
+</body>
+
+</html>
+
