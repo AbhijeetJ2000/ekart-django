@@ -16,8 +16,15 @@
           <div class="order-lg-last col-lg-5 col-sm-8 col-8">
             <div class="d-flex float-end">
               <a href="{% url 'store' %}" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"><p class="d-none d-md-block mb-0">Store</p> </a>
-              <a href="{% url 'cart' %}" class="me-1 me-md-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-shopping-cart me-md-1"></i><p class="d-none d-md-block mb-0">My cart</p></a>
-              <a href="#" class="me-1 me-md-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt me-md-1"></i><p class="d-none d-md-block mb-0">Sign in</p> </a>
+              <a href="{% url 'cart' %}" class="me-1 me-md-1 border rounded py-1 px-2 nav-link d-flex align-items-center"> 
+                <i class="fas fa-shopping-cart me-md-1"></i>
+                <span class="badge rounded-pill bg-danger text-white notify">{{ cart_count }}</span>
+              </a>
+              {% if user.id is not None %}
+              <a href="{% url 'logout' %}" class="me-1 me-md-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt me-md-1"></i><p class="d-none d-md-block mb-0">LogOut</p> </a>
+              {% else %}
+              <a href="{% url 'login' %}" class="me-1 me-md-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt me-md-1"></i><p class="d-none d-md-block mb-0">LogIn</p> </a>
+              {% endif %}
             </div>
           </div>
           <!-- Center elements -->

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="text-center text-lg-start">
+    <style>
+      .cascading-right {
+        margin-right: -50px;
+      }
+  
+      @media (max-width: 991.98px) {
+        .cascading-right {
+          margin-right: 0;
+        }
+      }
+    </style>
+    <div class="container py-4">
+      <div class="row g-0 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="card cascading-right" style="
+              background: hsla(0, 0%, 100%, 0.55);
+              backdrop-filter: blur(30px);
+              ">
+            <div class="card-body p-5 shadow-5 text-center">
+              <!-- {% include 'includes/alerts.html' %} -->
+              <h2 class="fw-bold mb-5">Sign up now</h2>
+              <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      {{ form.first_name }}
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      {{ form.last_name }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
+                  {{ form.email }}
+                </div>
+                <div class="form-outline mb-4">
+                    {{form.phone_number  }}
+                </div>
+                <div class="form-outline mb-4">
+                  {{ form.password }}
+                </div>
+                <div class="form-outline mb-4">
+                    {{ form.confirm_password }}
+                  </div>
+                <button type="submit" class="btn btn-primary btn-block mb-4">
+                  Sign up
+                </button>
+                <div class="text-center">
+                  <p>Have an account? <a href="{% url 'login' %}">Sign In</a></p>
+                </div>
+                {{ form.email.errors }}
+                {{ form.non_field_errors }}
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4"
+            alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
