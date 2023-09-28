@@ -12,124 +12,130 @@
             <div class="col-md-6 mb-4">
                 <h2>Billing Address</h2>
                 <!--Card-->
-                <div class="card p-4">
-                    <!--Grid row-->
-                    <div class="row mb-3">
-                        <!--Grid column-->
-                        <div class="col-md-6 mb-2">
-                            <!--firstName-->
-                            <div class="form-outline">
-                                <input type="text" id="typeText" class="form-control" required />
-                                <label class="form-label" for="typeText">First name</label>
+                <form action="{% url 'place_order' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="card p-4">
+                        <!--Grid row-->
+                        <div class="row mb-3">
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--firstName-->
+                                <div class="form-outline">
+                                    <input type="text" id="typeText" class="form-control" name="first_name" required />
+                                    <label class="form-label" for="typeText">First name</label>
+                                </div>
                             </div>
-                        </div>
-                        <!--Grid column-->
+                            <!--Grid column-->
 
-                        <!--Grid column-->
-                        <div class="col-md-6 mb-2">
-                            <!--lastName-->
-                            <div class="form-outline">
-                                <input type="text" id="typeText" class="form-control" required />
-                                <label class="form-label" for="typeText">Last name</label>
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--lastName-->
+                                <div class="form-outline">
+                                    <input type="text" id="typeText" class="form-control" name="last_name" required />
+                                    <label class="form-label" for="typeText">Last name</label>
+                                </div>
                             </div>
+                            <!--Grid column-->
                         </div>
-                        <!--Grid column-->
+
+                        <!--Grid row-->
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-2">
+                                <div class="form-outline">
+                                    <input type="email" id="typeText" class="form-control" name="email" required />
+                                    <label class="form-label" for="typeText">Email</label>
+                                </div>
+                            </div>
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--lastName-->
+                                <div class="form-outline">
+                                    <input type="text" id="typeText" class="form-control" name="contact_number"
+                                        required />
+                                    <label class="form-label" for="typeText">Contact Number</label>
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                        </div>
+
+                        <!-- Address Line 1 -->
+                        <p class="mb-0" required>
+                            Address Line 1<span class="text-danger">*</span>
+                        </p>
+                        <div class="form-outline mb-4">
+                            <input type="text" class="form-control" placeholder="1234 Main St" aria-label="1234 Main St"
+                                aria-describedby="basic-addon1" name="address_line_1" required />
+                        </div>
+
+                        <!-- Address Line 2 (optional) -->
+                        <p class="mb-0">
+                            Address Line 2 (optional)
+                        </p>
+                        <div class="form-outline mb-4">
+                            <input type="text" class="form-control" placeholder="Apartment or suite"
+                                aria-label="Apartment or suite" aria-describedby="basic-addon1" name="address_line_2" />
+                        </div>
+
+                        <div class="row">
+                            <!--Grid column-->
+                            <div class="col-lg-4 col-md-12 mb-4">
+                                <p class="mb-0">
+                                    City
+                                </p>
+                                <div class="form-outline mb-4">
+                                    <input type="text" class="form-control" placeholder="Patna"
+                                        aria-label="United States" aria-describedby="basic-addon1" name="city" />
+                                </div>
+                            </div>
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+                            <div class="col-lg-4 col-md-12 mb-4">
+                                <p class="mb-0">
+                                    State
+                                </p>
+                                <div class="form-outline mb-4">
+                                    <input type="text" class="form-control" placeholder="Bihar"
+                                        aria-label="United States" aria-describedby="basic-addon1" name="state" />
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                        </div>
+
+                        <!--Grid row-->
+                        <div class="row">
+                            <!--Grid column-->
+                            <div class="col-lg-4 col-md-12 mb-4">
+                                <p class="mb-0">
+                                    Country
+                                </p>
+                                <div class="form-outline mb-4">
+                                    <input type="text" class="form-control" placeholder="India"
+                                        aria-label="United States" aria-describedby="basic-addon1" name="country" />
+                                </div>
+                            </div>
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+                            <div class="col-lg-4 col-md-12 mb-4">
+                                <p class="mb-0">
+                                    Zip
+                                </p>
+                                <div class="form-outline">
+                                    <input type="text" class="form-control" name="zip_code" required />
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                            <h3>Payment option</h3>
+                        </div>
+
+                        <button class="btn btn-primary my-1" type="submit">Place Order</button>
+                        <a class="btn btn-light text-dark" type="button"
+                            style="background-color: white; border: 1px solid black;">Continue Shopping</a>
                     </div>
-
-                    <!--Grid row-->
-                    <div class="row mb-3">
-                        <div class="col-md-6 mb-2">
-                            <div class="form-outline">
-                                <input type="email" id="typeText" class="form-control" required />
-                                <label class="form-label" for="typeText">Email</label>
-                            </div>
-                        </div>
-                        <!--Grid column-->
-
-                        <!--Grid column-->
-                        <div class="col-md-6 mb-2">
-                            <!--lastName-->
-                            <div class="form-outline">
-                                <input type="text" id="typeText" class="form-control" required />
-                                <label class="form-label" for="typeText">Contact Number</label>
-                            </div>
-                        </div>
-                        <!--Grid column-->
-                    </div>
-
-                    <!-- Address Line 1 -->
-                    <p class="mb-0" required>
-                        Address Line 1<span class="text-danger">*</span>
-                    </p>
-                    <div class="form-outline mb-4">
-                        <input type="text" class="form-control" placeholder="1234 Main St" aria-label="1234 Main St"
-                            aria-describedby="basic-addon1" required />
-                    </div>
-
-                    <!-- Address Line 2 (optional) -->
-                    <p class="mb-0">
-                        Address Line 2 (optional)
-                    </p>
-                    <div class="form-outline mb-4">
-                        <input type="text" class="form-control" placeholder="Apartment or suite"
-                            aria-label="Apartment or suite" aria-describedby="basic-addon1" />
-                    </div>
-
-                    <div class="row">
-                        <!--Grid column-->
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <p class="mb-0">
-                                City
-                            </p>
-                            <div class="form-outline mb-4">
-                                <input type="text" class="form-control" placeholder="Patna"
-                                    aria-label="United States" aria-describedby="basic-addon1" />
-                            </div>
-                        </div>
-                        <!--Grid column-->
-
-                        <!--Grid column-->
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <p class="mb-0">
-                                State
-                            </p>
-                            <div class="form-outline mb-4">
-                                <input type="text" class="form-control" placeholder="Bihar"
-                                    aria-label="United States" aria-describedby="basic-addon1" />
-                            </div>
-                        </div>
-                        <!--Grid column-->
-                    </div>
-
-                    <!--Grid row-->
-                    <div class="row">
-                        <!--Grid column-->
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <p class="mb-0">
-                                Country
-                            </p>
-                            <div class="form-outline mb-4">
-                                <input type="text" class="form-control" placeholder="India"
-                                    aria-label="United States" aria-describedby="basic-addon1" />
-                            </div>
-                        </div>
-                        <!--Grid column-->
-
-                        <!--Grid column-->
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <p class="mb-0">
-                                Zip
-                            </p>
-                            <div class="form-outline">
-                                <input type="text" class="form-control" required />
-                            </div>
-                        </div>
-                        <!--Grid column-->
-                    </div>
-
-                    <button class="btn btn-primary my-1" type="button">Place Order</button>
-                    <button class="btn btn-light text-dark" type="button" style="background-color: white; border: 1px solid black;">Continue Shopping</button>
-                </div>
+                </form>
                 <!--/.Card-->
             </div>
             <!--Grid column-->
@@ -139,45 +145,43 @@
                 <h2>Your Cart</h2>
                 <table class="table">
                     <thead>
-                      <tr>
-                        <th scope="col">Product</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                        </tr>
                     </thead>
                     <tbody class="col-md-6">
-                      <!-- Example products in the cart -->
-                      {% for cart_item in cart_items %}
-                      <tr>
-                        <td class="p-2">
-                          <div class="d-flex align-items-center">
-                            <img src="{{ cart_item.product.images.url }}" alt="{{ cart_item.product.product_name }}"
-                              class="img-thumbnail" style="max-width: 100px;">
-                            <div class="ms-2">
-                              <p class="my-0">{{ cart_item.product.product_name }}</p>
-                              {% if cart_item.variations.all %}
-                              {% for variation in cart_item.variations.all %}
-                              <small>{{ variation.variation_category }}: {{ variation.variation_value }}</small><br>
-                              {% endfor %}
-                              {% endif %}
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          {{ cart_item.quantity }}
-                      </td>
-                        <td>
-                          Rs. {{ total_amt }} <br>
-                          <small>Rs. {{ cart_item.product.price }} each</small>
-                        </td>
-                      </tr>
-                      {% endfor %}
+                        <!-- Example products in the cart -->
+                        {% for cart_item in cart_items %}
+                        <tr>
+                            <td class="p-2">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ cart_item.product.images.url }}"
+                                        alt="{{ cart_item.product.product_name }}" class="img-thumbnail"
+                                        style="max-width: 100px;">
+                                    <div class="ms-2">
+                                        <p class="my-0">{{ cart_item.product.product_name }}</p>
+                                        {% if cart_item.variations.all %}
+                                        {% for variation in cart_item.variations.all %}
+                                        <small>{{ variation.variation_category }}: {{ variation.variation_value }}</small><br>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {{ cart_item.quantity }}
+                            </td>
+                            <td>
+                                Rs. {{ cart_item.sub_total }} <br>
+                                <small>Rs. {{ cart_item.product.price }} each</small>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
-                  </table>
+                </table>
             </div>
-            
-            
-            
         </div>
         <!--Grid row-->
     </div>
@@ -186,5 +190,4 @@
 
 
 {% endblock content %}
-
 

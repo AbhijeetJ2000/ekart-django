@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <h2>Order Summary</h2>
+                    </div>
+                    <div class="row">
+                        <!-- Left Side - Shipping Address and Payment Method -->
+                        <div class="col-md-7 col-xl-7">
+                            <h4>Shipping Address</h4>
+                            <p><strong>{{ address.full_name }}</strong><br>
+                                {{ address.full_address }} <br>
+                                {{ address.city }}, {{ address.state }}-{{ address.zip_code }} <br>
+                                {{ address.country }} <br>
+                                {{ address.contact_number }} <br>
+                                {{ address.email }}</p>
+                            <hr />
+                            <h4>Payment Method</h4>
+                            <p>
+                                PayPal
+                            </p>
+                            <hr />
+                            <h4>Review Products</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="col-md-6">
+                                    <!-- Example products in the cart -->
+                                    {% for cart_item in cart_items %}
+                                    <tr>
+                                        <td class="p-2">
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ cart_item.product.images.url }}"
+                                                    alt="{{ cart_item.product.product_name }}" class="img-thumbnail"
+                                                    style="max-width: 100px;">
+                                                <div class="ms-2">
+                                                    <p class="my-0">{{ cart_item.product.product_name }}</p>
+                                                    {% if cart_item.variations.all %}
+                                                    {% for variation in cart_item.variations.all %}
+                                                    <small>{{ variation.variation_category }}: {{ variation.variation_value }}</small><br>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{ cart_item.quantity }}
+                                        </td>
+                                        <td>
+                                            Rs. {{ cart_item.sub_total }} <br>
+                                            <small>Rs. {{ cart_item.product.price }} each</small>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Right Side - Price Details -->
+                        <div class="col-md-5 col-xl-5 offset-xl-0">
+                            <div class="rounded d-flex flex-column p-2" style="background-color: #f8f9fa;">
+                                <div class="p-2 me-3">
+                                    <h4>Price Details</h4>
+                                </div>
+                                <div class="border-top px-2 mx-2"></div>
+                                <div class="p-2 d-flex pt-3">
+                                    <div class="col-8">Total Price</div>
+                                    <div class="ms-auto"><b>Rs. {{ total }}</b></div>
+                                </div>
+                                <div class="p-2 d-flex">
+                                    <div class="col-8">
+                                        Shipping Charge
+                                    </div>
+                                    <div class="ms-auto"><b>Rs. {{ shipping_charge }}</b></div>
+                                </div>
+                                <div class="border-top px-2 mx-2"></div>
+                                <div class="p-2 d-flex pt-3">
+                                    <div class="col-8"><b>Total</b></div>
+                                    <div class="ms-auto"><b class="text-success">Rs. {{ total_amt }}</b></div>
+                                </div>
+                                <!-- <button class="btn btn-warning">Confirm Order</button> -->
+                                <div id="paypal-button-container"></div>
+                                <script
+                                    src="https://www.paypal.com/sdk/js?client-id=AfPM_Ql7Jh0II0tOQBIm4BxWIi9R4HuEDZdOMt2H5NsfhXx6wH3c8j-_cImdJ7tkf15TXWhGlH6zLZAg&currency=USD"></script>
+                                <script>
+                                    // Render the PayPal button into #paypal-button-container
+                                    paypal.Buttons({
+                                        style: {
+                                            color: 'blue',
+                                            shape: 'rect',
+                                            label: 'pay',
+                                            height: 40
+                                        },
+
+                                        // Set up the transaction
+                                        createOrder: function (data, actions) {
+                                            return actions.order.create({
+                                                purchase_units: [{
+                                                    amount: {
+                                                        value: '88.44',
+                                                    }
+                                                }]
+                                            });
+                                        },
+
+                                        // Finalize the transaction
+                                        onApprove: function (data, actions) {
+                                            return actions.order.capture().then(function (details) {
+                                                // Show a success message to the buyer
+
+                                            });
+                                        }
+                                    }).render('#paypal-button-container');
+                                </script>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}
+
+
+
+
+
+

@@ -12,99 +12,104 @@
 {% else %}
 <main class="py-4">
   <div class="container">
-    <div class="table-responsive text-nowrap">
-      <h2>Order Summary</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Product</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Price</th>
-          </tr>
-        </thead>
-        <tbody class="col-md-6">
-          <!-- Example products in the cart -->
-          {% for cart_item in cart_items %}
-          <tr>
-            <td class="p-2">
-              <div class="d-flex align-items-center">
-                <img src="{{ cart_item.product.images.url }}" alt="{{ cart_item.product.product_name }}"
-                  class="img-thumbnail" style="max-width: 100px;">
-                <div class="ms-2">
-                  <p class="my-0">{{ cart_item.product.product_name }}</p>
-                  {% if cart_item.variations.all %}
-                  {% for variation in cart_item.variations.all %}
-                  <small>{{ variation.variation_category }}: {{ variation.variation_value }}</small><br>
-                  {% endfor %}
-                  {% endif %}
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="quantity d-flex align-items-center">
-                  <form action="{% url 'decrement_cart_item_quantity' cart_item.product.id cart_item.id %}" method="POST">
-                      {% csrf_token %}
-                      <button type="submit" class="quantity-btn minus bg-dark text-white"><i class="fas fa-minus"></i></button>
-                  </form>
-          
-                  <input type="text" class="quantity-input" value="{{ cart_item.quantity }}" readonly
-                      style="width: 25px; text-align: center;">
-          
-                  <form action="{% url 'add_to_cart' cart_item.product.id %}" method="POST" class="form">
-                      {% csrf_token %}
-                      {% for item in cart_item.variations.all %}
-                          <input type="hidden" name="{{ item.variation_category | lower }}"
-                              value="{{ item.variation_value | capfirst }}">
-                      {% endfor %}
-                      <button type="submit" class="quantity-btn plus bg-dark text-white"><i class="fas fa-plus"></i></button>
-                  </form>
-              </div>
-          </td>
-          
-            <td>
-              Rs. {{ cart_item.sub_total }} <br>
-              <small>Rs. {{ cart_item.product.price }} each</small>
-            </td>
-            <td><a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}"><button
-                  class="btn btn-danger">Remove</button></a></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <!-- Cart summary and action buttons -->
-
-    <div class="container my-3">
-      <div class="row">
-        <div class="col-md-3">
-          <b>Total:</b>
-        </div>
-        <div class="col-md-3">
-          &#8377; {{ total }} <!-- Example shipping charges -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3">
-          <b>Shipping Charges:</b>
-        </div>
-        <div class="col-md-3">
-          &#8377; {{ shipping_charge }} <!-- Example shipping charges -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3">
-          <b>Total Amount:</b>
-        </div>
-        <div class="col-md-3">
-          <b>&#8377; {{ total_amt }}</b> <!-- Example total amount -->
-        </div>
-      </div>
-    </div>
     <div class="row">
-      <div class="col-md-12">
-        <a class="btn btn-warning float-right ml-2" href="{% url 'checkout' %}">Proceed to checkout</a>
-        <a class="btn btn-primary float-right" href="{% url 'store' %}">Continue shopping</a>
+      <div class="col-md-8"> <!-- Left side: Order Summary -->
+        <div class="table-responsive text-nowrap">
+          <h2>Order Summary</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody class="col-md-6">
+              <!-- Example products in the cart -->
+              {% for cart_item in cart_items %}
+              <tr>
+                <td class="p-2">
+                  <div class="d-flex align-items-center">
+                    <img src="{{ cart_item.product.images.url }}" alt="{{ cart_item.product.product_name }}"
+                      class="img-thumbnail" style="max-width: 100px;">
+                    <div class="ms-2">
+                      <p class="my-0">{{ cart_item.product.product_name }}</p>
+                      {% if cart_item.variations.all %}
+                      {% for variation in cart_item.variations.all %}
+                      <small>{{ variation.variation_category }}: {{ variation.variation_value }}</small><br>
+                      {% endfor %}
+                      {% endif %}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="quantity d-flex align-items-center">
+                      <form action="{% url 'decrement_cart_item_quantity' cart_item.product.id cart_item.id %}" method="POST">
+                          {% csrf_token %}
+                          <button type="submit" class="quantity-btn minus bg-dark text-white"><i class="fas fa-minus"></i></button>
+                      </form>
+              
+                      <input type="text" class="quantity-input" value="{{ cart_item.quantity }}" readonly
+                          style="width: 25px; text-align: center;">
+              
+                      <form action="{% url 'add_to_cart' cart_item.product.id %}" method="POST" class="form">
+                          {% csrf_token %}
+                          {% for item in cart_item.variations.all %}
+                              <input type="hidden" name="{{ item.variation_category | lower }}"
+                                  value="{{ item.variation_value | capfirst }}">
+                          {% endfor %}
+                          <button type="submit" class="quantity-btn plus bg-dark text-white"><i class="fas fa-plus"></i></button>
+                      </form>
+                  </div>
+                </td>
+                <td>
+                  Rs. {{ cart_item.sub_total }} <br>
+                  <small>Rs. {{ cart_item.product.price }} each</small>
+                </td>
+                <td><a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}"><button
+                      class="btn btn-danger">Remove</button></a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
+      <div class="col-md-4"> <!-- Right side: Total, Shipping Charges, and Total Amount -->
+        <div class="container my-3">
+          <div class="row">
+            <div class="col-md-6 text-right">
+              <b>Total:</b>
+            </div>
+            <div class="col-md-6">
+              &#8377; {{ total }} <!-- Example shipping charges -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 text-right">
+              <b>Shipping Charges:</b>
+            </div>
+            <div class="col-md-6">
+              &#8377; {{ shipping_charge }} <!-- Example shipping charges -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 text-right">
+              <b>Total Amount:</b>
+            </div>
+            <div class="col-md-6">
+              <b>&#8377; {{ total_amt }}</b> <!-- Example total amount -->
+            </div>
+          </div>
+          <!-- Right-aligned buttons -->
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <a class="btn btn-warning ml-2 mb-2" href="{% url 'checkout' %}">Proceed to checkout</a>
+              <a class="btn btn-primary" href="{% url 'store' %}">Continue shopping</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </main>
