@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
 from django.db.models import Q
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from carts.models import Cart, CartItem
+from carts.views import _cart_id
 
 # Create your views here.
 def store(request, category_slug=None):
@@ -27,8 +29,15 @@ def store(request, category_slug=None):
 
 def product_detail(request, category_slug, product_slug):
     single_product = Product.objects.get(slug=product_slug, category__slug=category_slug)
+    if request.user.is_authenticated:
+        is_cart_item_exits = CartItem.objects.filter(product=single_product, user=request.user).exists()
+    else:
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        is_cart_item_exits = CartItem.objects.filter(product=single_product, cart=cart).exists()
+    print(is_cart_item_exits)
     context = {
         'single_product': single_product,
+        'is_cart_item_exits': is_cart_item_exits,
     }
     return render(request, "store/product_detail.html", context)
 
@@ -46,4 +55,8 @@ def search(request):
         'product_count': product_count,
     }
     return render(request, 'store/store.html', context)
+
+
+
+
 

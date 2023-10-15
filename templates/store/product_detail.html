@@ -23,37 +23,20 @@
               <!-- Description -->
               <p class="lead font-weight-bold my-0"><strong>Description:</strong></p>
               <p>{{single_product.description}}</p>
-              
-              <div class="row">
-                <!-- Color Selection -->
-                <div class="col-md-6">
-                  <div class="item-option-select">
-                    <h6><strong>Choose Color</strong></h6>
-                    <select name="color" class="browser-default custom-select" required>
-                      <option value="" disabled selected>Select</option>
-                      {% for i in single_product.variation_set.colors %}
-                      <option value="{{ i.variation_value | capfirst }}">{{ i.variation_value | capfirst }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-                <!-- Size Selection -->
-                <div class="col-md-6">
-                  <div class="item-option-select">
-                    <h6><strong>Choose Size</strong></h6>
-                    <select name="size" class="browser-default custom-select" required>
-                      <option value="" disabled selected>Select</option>
-                      {% for i in single_product.variation_set.sizes %}
-                      <option value="{{ i.variation_value | capfirst }}">{{ i.variation_value | capfirst }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>  
-              </div>
-                <button class="btn btn-primary btn-md my-2 p" type="submit">
-                  Add to Cart
-                  <i class="fas fa-shopping-cart ml-1"></i>
-                </button>
+              {% if is_cart_item_exits %}
+              <a class="btn btn-primary btn-md my-2 p mx-2">
+                Added to Cart
+              </a>
+              <a class="btn btn-warning btn-md my-2 p" href="{% url 'cart' %}">
+                View Cart
+                <i class="fa fa-eye"></i>
+              </a>
+              {% else %}
+              <button class="btn btn-primary btn-md my-2 p" type="submit">
+                Add to Cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </button>
+              {% endif %}
             </div>
           </form>
           <!--Content-->
@@ -64,5 +47,8 @@
     </div>
   </main>
 {% endblock content %}
+
+
+
 
 

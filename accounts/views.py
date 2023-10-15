@@ -30,52 +30,48 @@ def register(request):
     }
     return render(request, "accounts/register.html", context)
 
+
 def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-
         user = auth.authenticate(email=email, password=password)
-
         if user is not None:
             try:
                 cart = Cart.objects.get(cart_id=_cart_id(request))
                 is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
                 if is_cart_item_exists:
-                    cart_item = CartItem.objects.filter(cart=cart)
-                    # Getting the product variations by cart id
-                    product_variation = []
-                    for item in cart_item:
-                        variation = item.variations.all()
-                        product_variation.append(list(variation))
-                    # Get the cart items from the user to access his product variations
-                    cart_item = CartItem.objects.filter(user=user)
-                    ex_var_list = []
-                    id = []
-                    for item in cart_item:
-                        existing_variation = item.variations.all()
-                        ex_var_list.append(list(existing_variation))
-                        id.append(item.id)
-
-                    for pr in product_variation:
-                        if pr in ex_var_list:
-                            index = ex_var_list.index(pr)
-                            item_id = id[index]
-                            item = CartItem.objects.get(id=item_id)
-                            item.quantity += 1
-                            item.user = user
-                            item.save()
+                    # find the current cart item list
+                    curr_cart_item = CartItem.objects.filter(cart=cart)
+                    # find the products associated with the current cart_item_list
+                    curr_products = []
+                    for item in curr_cart_item:
+                        curr_products.append(item.product)
+                    # find the user cart item list
+                    user_cart_item = CartItem.objects.filter(user=user)
+                    # find the products associated with the current cart_item_list
+                    user_products = []
+                    for item in user_cart_item:
+                        user_products.append(item.product)
+                    # check if the current_products exists in the user_products
+                    for index, pr in enumerate(curr_products):
+                        if pr in user_products:
+                            # add the number of quantity
+                            pr_index_in_user_cart = user_products.index(pr)
+                            item_in_user_cart = user_cart_item[pr_index_in_user_cart]
+                            item_in_curr_cart = curr_cart_item[index]
+                            item_in_user_cart.quantity += item_in_curr_cart.quantity
+                            item_in_user_cart.save()
                         else:
-                            cart_item = CartItem.objects.filter(cart=cart)
-                            for item in cart_item:
-                                item.user = user
-                                item.save()
+                            # assign the user to the cart item
+                            item_in_curr_cart = curr_cart_item[index]
+                            item_in_curr_cart.user = user
+                            item_in_curr_cart.save()
             except:
                 pass
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
             url = request.META.get('HTTP_REFERER')
-            print(url)
             try:
                 query = requests.utils.urlparse(url).query
                 params = dict(x.split('=') for x in query.split('&'))
@@ -89,10 +85,12 @@ def login(request):
             return redirect('login')
     return render(request, 'accounts/login.html')
 
+
 @login_required(login_url='login')
 def logout(request):
     auth.logout(request)
     messages.success(request, "You are logged out.")
     return redirect('login')
+
 
 
