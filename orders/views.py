@@ -14,8 +14,6 @@ def place_order(request, total=0, shipping_charge=0):
     cart_count = cart_items.count()
     if cart_count <= 0:
         return redirect('store')
-    total = 0
-    shipping_charge = 0
     for cart_item in cart_items:
         total += (cart_item.product.price * cart_item.quantity)
     total_amt = total + shipping_charge
@@ -41,6 +39,7 @@ def place_order(request, total=0, shipping_charge=0):
         order.address = address
         order.total = total
         order.shipping_charge = shipping_charge
+        order.ip = request.META.get('REMOTE_ADDR')
         order.save()
         # Generate order number
         yr = int(datetime.date.today().strftime('%Y'))
